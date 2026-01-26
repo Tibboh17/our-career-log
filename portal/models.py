@@ -9,6 +9,7 @@ class Project(models.Model):
 
     # Visibility and timestamps
     is_public = models.BooleanField(default=True)
+    is_featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
