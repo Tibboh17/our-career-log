@@ -1,0 +1,33 @@
+---
+layout: default
+title: 히스토리
+description: 팀의 의사결정과 마일스톤 기록
+---
+
+<section class="projects">
+  <div class="container">
+    <div class="section-head">
+      <h2>히스토리</h2>
+      <p>우리의 결정과 변화의 기록을 타임라인으로 남깁니다.</p>
+    </div>
+
+    <div class="project-grid">
+      {% assign items = site.history | sort: "date" | reverse %}
+      {% for h in items %}
+      <a class="project-card" href="{{ h.url | relative_url }}">
+        <div class="project-meta">
+          <span>{{ h.date | date: "%Y-%m-%d" }}</span>
+          <span>{{ h.type | default: "Milestone" }}</span>
+        </div>
+        <h3>{{ h.title }}</h3>
+        <p>{{ h.summary }}</p>
+        {% if h.tags %}
+        <div class="tag-row">
+          {% for t in h.tags %}<span>{{ t }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

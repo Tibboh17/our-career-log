@@ -1,0 +1,39 @@
+title: Our Career Log
+description: 프로젝트 기록과 결과를 한눈에 보여주는 커리어 로그.
+lang: ko
+timezone: Asia/Seoul
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+  history:
+    output: true
+    permalink: /history/:name/
+
+permalink: /blog/:categories/:title/
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: page
+  - scope:
+      path: ""
+      type: "history"
+    values:
+      layout: page

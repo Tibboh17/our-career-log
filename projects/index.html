@@ -1,0 +1,33 @@
+---
+layout: default
+title: 프로젝트
+description: 공개 프로젝트 목록
+---
+
+<section class="projects">
+  <div class="container">
+    <div class="section-head">
+      <h2>공개 프로젝트</h2>
+      <p>성과보다 학습 포인트를 중심으로 정리했습니다.</p>
+    </div>
+
+    <div class="project-grid">
+      {% assign items = site.projects | sort: "year" | reverse %}
+      {% for p in items %}
+      <a class="project-card" href="{{ p.url | relative_url }}">
+        <div class="project-meta">
+          <span>{{ p.year }}</span>
+          <span>{{ p.domain }}</span>
+        </div>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.summary }}</p>
+        {% if p.tags %}
+        <div class="tag-row">
+          {% for t in p.tags %}<span>{{ t }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
