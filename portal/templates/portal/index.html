@@ -1,0 +1,398 @@
+﻿<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>우리들의 이직로그</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #0f0f10;
+        --bg-2: #15161a;
+        --ink: #f5f5f5;
+        --muted: rgba(245, 245, 245, 0.62);
+        --accent: #ff6a3d;
+        --accent-2: #ffb347;
+        --card: rgba(255, 255, 255, 0.06);
+        --stroke: rgba(255, 255, 255, 0.1);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        --radius-lg: 28px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at 15% 20%, rgba(255, 106, 61, 0.35), transparent 48%),
+          radial-gradient(circle at 85% 0%, rgba(255, 179, 71, 0.28), transparent 42%),
+          linear-gradient(140deg, var(--bg), var(--bg-2));
+        color: var(--ink);
+        font-family: "Gmarket Sans", "SUIT", "NanumSquare", "Apple SD Gothic Neo",
+          "Malgun Gothic", sans-serif;
+        min-height: 100vh;
+      }
+
+      .grain {
+        position: fixed;
+        inset: 0;
+        background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02) 76%, transparent 77%, transparent),
+          linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02) 76%, transparent 77%, transparent);
+        background-size: 120px 120px;
+        pointer-events: none;
+        opacity: 0.25;
+        mix-blend-mode: overlay;
+      }
+
+      .shell {
+        position: relative;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+        z-index: 1;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 56px;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .nav-pill {
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--ink);
+        font-size: 13px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
+        gap: 32px;
+        align-items: center;
+      }
+
+      .headline {
+        font-size: clamp(34px, 5vw, 64px);
+        line-height: 1.05;
+        margin: 0 0 18px;
+      }
+
+      .lead {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        border-radius: 999px;
+        padding: 12px 20px;
+        font-weight: 600;
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: var(--ink);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn.primary {
+        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        box-shadow: 0 16px 30px rgba(255, 106, 61, 0.3);
+      }
+
+      .btn.ghost {
+        border-color: var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .hero-card {
+        background: var(--card);
+        border-radius: var(--radius-lg);
+        padding: 26px;
+        border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
+        display: grid;
+        gap: 18px;
+      }
+
+      .hero-card span {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+      }
+
+      .hero-card strong {
+        font-size: 40px;
+        display: block;
+      }
+
+      .stats {
+        margin-top: 48px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 16px;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: var(--radius-md);
+        padding: 20px 22px;
+        border: 1px solid var(--stroke);
+        display: grid;
+        gap: 6px;
+      }
+
+      .stat-card h3 {
+        margin: 0;
+        font-size: 14px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .stat-card strong {
+        font-size: 22px;
+      }
+
+      .section-title {
+        margin: 64px 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-title h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .section-title span {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .projects {
+        display: grid;
+        gap: 20px;
+      }
+
+      .project-card {
+        background: var(--card);
+        border-radius: var(--radius-lg);
+        padding: 26px;
+        border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
+        display: grid;
+        gap: 14px;
+      }
+
+      .project-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .project-title {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .project-date {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .project-desc {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .artifact-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0;
+        margin: 4px 0 0;
+        list-style: none;
+      }
+
+      .artifact-item {
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+      }
+
+      .artifact-item a {
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .artifact-item a:hover {
+        text-decoration: underline;
+      }
+
+      .empty-state {
+        margin-top: 40px;
+        padding: 32px;
+        border-radius: var(--radius-md);
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+        color: var(--muted);
+        text-align: center;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade {
+        animation: rise 0.7s ease both;
+      }
+
+      @media (max-width: 960px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .shell {
+          padding: 36px 18px 80px;
+        }
+
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grain"></div>
+    <div class="shell">
+      <nav>
+        <div class="brand">Our Career Log</div>
+        <div class="nav-pill">기록을 모아 성장으로</div>
+      </nav>
+
+      <section class="hero fade">
+        <div>
+          <h1 class="headline">우리들의 이직로그</h1>
+          <p class="lead">
+            각자의 프로젝트와 결과물을 정리하고, 다음 도전을 준비하는 아카이브.
+            공개 가능한 자료만 모아 깔끔하게 정리합니다.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="#projects">프로젝트 살펴보기</a>
+            <a class="btn ghost" href="/admin/">관리자 열기</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <span>Public Projects</span>
+          <strong>{{ projects|length }}</strong>
+          <p class="lead">공개로 설정된 프로젝트가 이곳에 모입니다.</p>
+        </div>
+      </section>
+
+      <section class="stats fade">
+        <div class="stat-card">
+          <h3>Weekly Update</h3>
+          <strong>꾸준한 기록</strong>
+          <span class="lead">한 주에 하나의 결과물을 남기는 루틴</span>
+        </div>
+        <div class="stat-card">
+          <h3>Focus</h3>
+          <strong>프로젝트 중심</strong>
+          <span class="lead">결과와 과정을 함께 정리하는 공간</span>
+        </div>
+        <div class="stat-card">
+          <h3>Share</h3>
+          <strong>공개 범위 조절</strong>
+          <span class="lead">공개/비공개를 자유롭게 설정</span>
+        </div>
+      </section>
+
+      <div class="section-title" id="projects">
+        <h2>프로젝트 목록</h2>
+        <span>총 {{ projects|length }}개</span>
+      </div>
+
+      {% if projects %}
+      <section class="projects">
+        {% for project in projects %}
+        <article class="project-card fade">
+          <div class="project-head">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <span class="project-date">{{ project.created_at|date:"Y.m.d" }}</span>
+          </div>
+          {% if project.description %}
+          <p class="project-desc">{{ project.description }}</p>
+          {% endif %}
+
+          {% if project.artifacts.all %}
+          <ul class="artifact-list">
+            {% for artifact in project.artifacts.all %}
+            <li class="artifact-item">
+              <span>{{ artifact.title }}</span>
+              {% if artifact.file %}
+              <a href="{{ artifact.file.url }}">파일 보기</a>
+              {% endif %}
+              {% if artifact.external_url %}
+              <a href="{{ artifact.external_url }}" target="_blank" rel="noopener noreferrer">
+                링크 열기
+              </a>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </section>
+      {% else %}
+      <div class="empty-state">
+        아직 공개된 프로젝트가 없습니다. 첫 프로젝트를 추가해보세요.
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
