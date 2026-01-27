@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>블로그 작성 | 우리들의 이직로그</title>
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #0f0f10;
+        --bg-2: #15161a;
+        --ink: #f5f5f5;
+        --muted: rgba(245, 245, 245, 0.62);
+        --accent: #ff6a3d;
+        --accent-2: #ffb347;
+        --card: rgba(255, 255, 255, 0.06);
+        --stroke: rgba(255, 255, 255, 0.1);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        --radius-lg: 28px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at 15% 20%, rgba(255, 106, 61, 0.35), transparent 48%),
+          radial-gradient(circle at 85% 0%, rgba(255, 179, 71, 0.28), transparent 42%),
+          linear-gradient(140deg, var(--bg), var(--bg-2));
+        color: var(--ink);
+        font-family: "Gmarket Sans", "SUIT", "NanumSquare", "Apple SD Gothic Neo",
+          "Malgun Gothic", sans-serif;
+        min-height: 100vh;
+      }
+
+      .shell {
+        position: relative;
+        width: min(90vw, 1400px);
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 28px;
+      }
+
+      p {
+        margin: 0 0 24px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--ink);
+        padding: 12px 14px;
+        font-size: 14px;
+        line-height: 1.6;
+        font-family: inherit;
+      }
+
+      textarea {
+        min-height: 36px;
+        resize: vertical;
+      }
+
+      #editor {
+        border-radius: 16px;
+        border: 1px solid var(--stroke);
+        overflow: hidden;
+        background: #ffffff;
+      }
+
+      .toastui-editor-defaultUI {
+        background: #ffffff;
+        color: #1b1b1f;
+      }
+
+      .toastui-editor-defaultUI .toastui-editor-toolbar {
+        background: #f3f3f2;
+        border-bottom: 1px solid rgba(27, 27, 31, 0.12);
+      }
+
+      .toastui-editor-defaultUI .toastui-editor-main {
+        background: #ffffff;
+      }
+
+      .toastui-editor-defaultUI .toastui-editor-contents {
+        color: #1b1b1f;
+      }
+
+      input[type="file"] {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px dashed var(--stroke);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        padding: 14px;
+        font-size: 13px;
+        font-family: inherit;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border-radius: 999px;
+        padding: 12px 18px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--ink);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+      }
+
+      .btn.primary {
+        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        border-color: transparent;
+      }
+
+      .errorlist {
+        margin: 8px 0 0;
+        color: #ff9f9f;
+        padding-left: 18px;
+      }
+
+      .help-text {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="card">
+        <h1>{% if edit_mode %}글 수정{% else %}글 작성{% endif %}</h1>
+        <p>관리자 계정으로만 작성할 수 있습니다. 공개 여부를 확인하세요.</p>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div>
+            <label for="{{ form.title.id_for_label }}">제목</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+          </div>
+          <div>
+            <label for="{{ form.slug.id_for_label }}">슬러그</label>
+            {{ form.slug }}
+            {{ form.slug.errors }}
+            <p class="help-text">예: tech-blog (영문/숫자/하이픈)</p>
+          </div>
+          <div>
+            <label for="{{ form.summary.id_for_label }}">요약 설명</label>
+            {{ form.summary }}
+            {{ form.summary.errors }}
+          </div>
+          <div>
+            <label for="{{ form.content.id_for_label }}">내용</label>
+            <textarea id="markdown-input" name="content" hidden>{{ form.content.value|default_if_none:"" }}</textarea>
+            <div id="editor"></div>
+            {{ form.content.errors }}
+            <p class="help-text">
+              이미지 버튼을 눌러 업로드하면 마크다운에 자동 삽입됩니다.
+            </p>
+          </div>
+          <div>
+            <label for="{{ form.thumbnail.id_for_label }}">썸네일 이미지</label>
+            {{ form.thumbnail }}
+            {{ form.thumbnail.errors }}
+          </div>
+          <div class="checkbox-row">
+            {{ form.is_public }}
+            <label for="{{ form.is_public.id_for_label }}">공개</label>
+            {{ form.is_public.errors }}
+          </div>
+          <div class="actions">
+            <button class="btn primary" type="submit">저장</button>
+            <a class="btn" href="{% url 'portal:blog-list' %}">취소</a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+      const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+          return parts.pop().split(";").shift();
+        }
+        return "";
+      };
+
+      const Editor = toastui.Editor;
+      const markdownInput = document.getElementById("markdown-input");
+      const editor = new Editor({
+        el: document.querySelector("#editor"),
+        height: "840px",
+        initialEditType: "markdown",
+        previewStyle: "vertical",
+        initialValue: markdownInput.value || "",
+        hooks: {
+          addImageBlobHook: async (blob, callback) => {
+            const formData = new FormData();
+            formData.append("image", blob);
+            const response = await fetch("{% url 'portal:project-upload-image' %}", {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+              },
+              body: formData,
+            });
+            const data = await response.json();
+            if (data.url) {
+              callback(data.url, "image");
+            }
+          },
+        },
+      });
+
+      const form = document.querySelector("form");
+      form.addEventListener("submit", () => {
+        markdownInput.value = editor.getMarkdown();
+      });
+    </script>
+  </body>
+</html>

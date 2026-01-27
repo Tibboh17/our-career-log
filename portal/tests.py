@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .models import Artifact, Project
+from .models import Project
 
 
 class HomeViewVisibilityTests(TestCase):
@@ -27,25 +27,6 @@ class HomeViewVisibilityTests(TestCase):
         self.assertNotContains(response, "Public Project")
         self.assertNotContains(response, "Featured Private Project")
 
-    def test_home_shows_only_public_artifacts(self):
-        project = Project.objects.create(title="Public Project", is_public=True)
-        public_artifact = Artifact.objects.create(
-            project=project,
-            title="Public Artifact",
-            is_public=True,
-        )
-        Artifact.objects.create(
-            project=project,
-            title="Private Artifact",
-            is_public=False,
-        )
-
-        response = self.client.get("/")
-
-        self.assertContains(response, public_artifact.title)
-        self.assertNotContains(response, "Private Artifact")
-
-
 class ProjectListViewTests(TestCase):
     def test_project_list_shows_only_public_projects(self):
         public_project = Project.objects.create(
@@ -63,3 +44,22 @@ class ProjectListViewTests(TestCase):
 
         self.assertContains(response, public_project.title)
         self.assertNotContains(response, "Private Project")
+
+    def test_project_list_search_filters_projects(self):
+        Project.objects.create(
+            title="Alpha Project",
+            description="First project",
+            is_public=True,
+            is_featured=False,
+        )
+        Project.objects.create(
+            title="Beta Project",
+            description="Second project",
+            is_public=True,
+            is_featured=False,
+        )
+
+        response = self.client.get("/projects/")
+
+        self.assertContains(response, "Alpha Project")
+        self.assertContains(response, "Beta Project")

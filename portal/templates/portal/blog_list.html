@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>프로젝트 목록 | 우리들의 이직로그</title>
+    <title>기술 블로그 | 우리들의 이직로그</title>
     <style>
       :root {
         color-scheme: light;
@@ -66,8 +66,13 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        font-size: 13px;
-        color: var(--muted);
+        font-size: 16px;
+        color: var(--ink);
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: linear-gradient(120deg, rgba(255, 106, 61, 0.18), rgba(255, 179, 71, 0.12));
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
       }
 
       .nav-actions {
@@ -103,12 +108,12 @@
         font-size: 14px;
       }
 
-      .projects {
+      .posts {
         display: grid;
         gap: 20px;
       }
 
-      .project-card {
+      .post-card {
         background: var(--card);
         border-radius: var(--radius-lg);
         padding: 22px;
@@ -120,7 +125,7 @@
         align-items: center;
       }
 
-      .project-media {
+      .post-media {
         width: 100%;
         aspect-ratio: 4 / 3;
         border-radius: 16px;
@@ -131,44 +136,40 @@
         place-items: center;
       }
 
-      .project-media img {
+      .post-media img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
       }
 
-      .project-body {
+      .post-body {
         display: grid;
         gap: 10px;
       }
 
-      .project-meta {
+      .post-meta {
         color: var(--muted);
         font-size: 12px;
         text-transform: uppercase;
         letter-spacing: 0.14em;
       }
 
-      .project-title {
+      .post-title {
         margin: 0;
         font-size: 22px;
       }
 
-      .project-title a {
+      .post-title a {
         color: var(--ink);
         text-decoration: none;
       }
 
-      .project-title a:visited {
-        color: var(--ink);
-      }
-
-      .project-title a:hover {
+      .post-title a:hover {
         text-decoration: underline;
       }
 
-      .project-desc {
+      .post-desc {
         margin: 0;
         color: var(--muted);
         line-height: 1.7;
@@ -195,7 +196,7 @@
           gap: 12px;
         }
 
-        .project-card {
+        .post-card {
           grid-template-columns: 1fr;
           padding: 20px;
         }
@@ -210,43 +211,41 @@
         <div class="nav-actions">
           <a class="nav-pill" href="{% url 'portal:home' %}">메인으로</a>
           {% if request.user.is_staff %}
-          <a class="nav-pill" href="{% url 'portal:project-manage' %}">관리</a>
+          <a class="nav-pill" href="{% url 'portal:blog-manage' %}">관리</a>
           {% endif %}
         </div>
       </nav>
 
       <div class="section-title">
-        <h1>프로젝트 목록</h1>
-        <span>총 {{ projects|length }}개</span>
+        <h1>기술 블로그</h1>
+        <span>총 {{ posts|length }}개</span>
       </div>
 
-      {% if projects %}
-      <section class="projects">
-        {% for project in projects %}
-        <article class="project-card">
-          <div class="project-media">
-            {% if project.thumbnail %}
-            <img src="{{ project.thumbnail.url }}" alt="" loading="lazy" />
+      {% if posts %}
+      <section class="posts">
+        {% for post in posts %}
+        <article class="post-card">
+          <div class="post-media">
+            {% if post.thumbnail %}
+            <img src="{{ post.thumbnail.url }}" alt="" loading="lazy" />
             {% endif %}
           </div>
-          <div class="project-body">
-            <div class="project-meta">Public · {{ project.created_at|date:"Y.m.d" }}</div>
-            <h2 class="project-title">
-              <a href="{% url 'portal:project-detail' project.slug %}">{{ project.title }}</a>
+          <div class="post-body">
+            <div class="post-meta">Public · {{ post.created_at|date:"Y.m.d" }}</div>
+            <h2 class="post-title">
+              <a href="{% url 'portal:blog-detail' post.slug %}">{{ post.title }}</a>
             </h2>
-            {% if project.summary %}
-            <p class="project-desc">{{ project.summary }}</p>
-            {% elif project.description %}
-            <p class="project-desc">{{ project.description|striptags|truncatewords:24 }}</p>
+            {% if post.summary %}
+            <p class="post-desc">{{ post.summary }}</p>
+            {% elif post.content %}
+            <p class="post-desc">{{ post.content|striptags|truncatewords:24 }}</p>
             {% endif %}
           </div>
         </article>
         {% endfor %}
       </section>
       {% else %}
-      <div class="empty-state">
-        아직 공개된 프로젝트가 없습니다. 첫 프로젝트를 추가해보세요.
-      </div>
+      <div class="empty-state">아직 공개된 글이 없습니다.</div>
       {% endif %}
     </div>
   </body>

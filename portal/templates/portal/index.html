@@ -66,17 +66,19 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        font-size: 13px;
-        color: var(--muted);
+        font-size: 16px;
+        color: var(--ink);
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: linear-gradient(120deg, rgba(255, 106, 61, 0.18), rgba(255, 179, 71, 0.12));
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
       }
 
-      .nav-pill {
-        padding: 10px 16px;
-        border-radius: 999px;
-        border: 1px solid var(--stroke);
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--ink);
-        font-size: 13px;
+      .nav-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
       }
 
       .hero {
@@ -99,11 +101,6 @@
         line-height: 1.7;
       }
 
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
 
       .btn {
         border-radius: 999px;
@@ -115,6 +112,8 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        min-width: 140px;
+        justify-content: center;
       }
 
       .btn.primary {
@@ -122,10 +121,6 @@
         box-shadow: 0 16px 30px rgba(255, 106, 61, 0.3);
       }
 
-      .btn.ghost {
-        border-color: var(--stroke);
-        background: rgba(255, 255, 255, 0.04);
-      }
 
       .hero-card {
         background: var(--card);
@@ -135,6 +130,7 @@
         box-shadow: var(--shadow);
         display: grid;
         gap: 18px;
+        position: relative;
       }
 
       .hero-card span {
@@ -149,32 +145,43 @@
         display: block;
       }
 
+
       .stats {
-        margin-top: 48px;
+        margin-top: 0;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
         gap: 16px;
       }
 
       .stat-card {
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: var(--radius-md);
+        background: var(--card);
+        border-radius: var(--radius-lg);
         padding: 20px 22px;
         border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
         display: grid;
-        gap: 6px;
+        gap: 8px;
       }
 
       .stat-card h3 {
         margin: 0;
-        font-size: 14px;
+        font-size: 12px;
         color: var(--muted);
-        letter-spacing: 0.1em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
+        font-weight: 400;
       }
 
-      .stat-card strong {
-        font-size: 22px;
+      .stat-title {
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 400;
+      }
+
+      .stat-card .lead {
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0;
       }
 
       .section-title {
@@ -189,97 +196,51 @@
         font-size: 24px;
       }
 
-      .section-title span {
-        color: var(--muted);
-        font-size: 14px;
-      }
 
-      .projects {
+      .team-grid {
         display: grid;
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
       }
 
-      .project-card {
+      .team-card {
         background: var(--card);
         border-radius: var(--radius-lg);
-        padding: 26px;
+        padding: 20px 22px;
         border: 1px solid var(--stroke);
         box-shadow: var(--shadow);
         display: grid;
-        gap: 14px;
+        gap: 8px;
       }
 
-      .project-head {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: space-between;
-        align-items: baseline;
-      }
-
-      .project-title {
-        margin: 0;
-        font-size: 22px;
-      }
-
-      .project-title a,
-      .project-title a:visited {
-        color: var(--ink);
-        text-decoration: none;
-      }
-
-      .project-title a:hover {
-        text-decoration: underline;
-      }
-
-      .project-date {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .project-desc {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .artifact-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 0;
-        margin: 4px 0 0;
-        list-style: none;
-      }
-
-      .artifact-item {
-        padding: 8px 12px;
-        border-radius: var(--radius-sm);
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 13px;
-      }
-
-      .artifact-item a {
-        color: var(--ink);
-        text-decoration: none;
-      }
-
-      .artifact-item a:hover {
-        text-decoration: underline;
-      }
-
-      .empty-state {
-        margin-top: 40px;
-        padding: 32px;
+      .team-photo {
+        width: 100%;
+        aspect-ratio: 3 / 2;
         border-radius: var(--radius-md);
-        border: 1px dashed rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        object-fit: cover;
+        display: block;
+      }
+
+      .team-role {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
         color: var(--muted);
-        text-align: center;
-        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .team-name {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.2;
+      }
+
+      .team-intro {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
       }
 
       @keyframes rise {
@@ -321,90 +282,74 @@
     <div class="shell">
       <nav>
         <div class="brand">Our Career Log</div>
-        <div class="nav-pill">기록을 모아 성장으로</div>
+        <div class="nav-actions">
+          <a class="btn primary" href="{% url 'portal:project-list' %}">Projects</a>
+          <a class="btn primary" href="{% url 'portal:blog-list' %}">Tech</a>
+        </div>
       </nav>
 
       <section class="hero fade">
         <div>
           <h1 class="headline">우리들의 이직로그</h1>
           <p class="lead">
-            각자의 프로젝트와 결과물을 정리하고, 다음 도전을 준비하는 아카이브.
+            각자의 프로젝트와 기록을 정리하고, 다음 도전을 준비하는 아카이브.
             공개 가능한 자료만 모아 깔끔하게 정리합니다.
           </p>
-          <div class="actions">
-            <a class="btn primary" href="{% url 'portal:project-list' %}">프로젝트 살펴보기</a>
-            <a class="btn ghost" href="/admin/">관리자 열기</a>
-          </div>
         </div>
         <div class="hero-card">
-          <span>Featured Projects</span>
-          <strong>{{ projects|length }}</strong>
-          <p class="lead">관리자가 선정한 대표 프로젝트만 보여줍니다.</p>
-        </div>
-      </section>
-
-      <section class="stats fade">
-        <div class="stat-card">
-          <h3>Weekly Update</h3>
-          <strong>꾸준한 기록</strong>
-          <span class="lead">한 주에 하나의 결과물을 남기는 루틴</span>
-        </div>
-        <div class="stat-card">
-          <h3>Focus</h3>
-          <strong>프로젝트 중심</strong>
-          <span class="lead">결과와 과정을 함께 정리하는 공간</span>
-        </div>
-        <div class="stat-card">
-          <h3>Share</h3>
-          <strong>공개 범위 조절</strong>
-          <span class="lead">공개/비공개를 자유롭게 설정</span>
+          <span>Public Projects</span>
+          <strong>{{ public_count }}개</strong>
+          <p class="lead">현재 공개된 프로젝트 수</p>
         </div>
       </section>
 
       <div class="section-title">
-        <h2>대표 프로젝트</h2>
-        <span>총 {{ projects|length }}개</span>
+        <h2>목표</h2>
       </div>
 
-      {% if projects %}
-      <section class="projects">
-        {% for project in projects %}
-        <article class="project-card fade">
-          <div class="project-head">
-            <h3 class="project-title">
-              <a href="{% url 'portal:project-detail' project.pk %}">{{ project.title }}</a>
-            </h3>
-            <span class="project-date">{{ project.created_at|date:"Y.m.d" }}</span>
-          </div>
-          {% if project.description %}
-          <p class="project-desc">{{ project.description }}</p>
-          {% endif %}
-
-          {% if project.artifacts.all %}
-          <ul class="artifact-list">
-            {% for artifact in project.artifacts.all %}
-            <li class="artifact-item">
-              <span>{{ artifact.title }}</span>
-              {% if artifact.file %}
-              <a href="{{ artifact.file.url }}">파일 보기</a>
-              {% endif %}
-              {% if artifact.external_url %}
-              <a href="{{ artifact.external_url }}" target="_blank" rel="noopener noreferrer">
-                링크 열기
-              </a>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </article>
-        {% endfor %}
+      <section class="stats fade">
+        <div class="stat-card">
+          <h3>Weekly Update</h3>
+          <div class="stat-title">꾸준한 기록</div>
+          <span class="lead">한 주에 하나의 기록을 남기는 루틴</span>
+        </div>
+        <div class="stat-card">
+          <h3>Focus</h3>
+          <div class="stat-title">프로젝트 중심</div>
+          <span class="lead">결과와 과정을 함께 정리하는 공간</span>
+        </div>
+        <div class="stat-card">
+          <h3>Share</h3>
+          <div class="stat-title">함께하는 성장</div>
+          <span class="lead">성장 과정을 함께 공유하는 공간</span>
+        </div>
       </section>
-      {% else %}
-      <div class="empty-state">
-        아직 대표 프로젝트가 없습니다. 관리자에서 대표 프로젝트를 지정해주세요.
+
+      <div class="section-title">
+        <h2>팀 소개</h2>
       </div>
-      {% endif %}
+
+      <section class="team-grid">
+        <article class="team-card fade">
+          <img class="team-photo" src="https://placehold.co/600x400" alt="팀원 사진" />
+          <div class="team-role">Product</div>
+          <h3 class="team-name">팀원 이름</h3>
+          <p class="team-intro">팀에서 맡는 역할과 짧은 소개를 입력하세요.</p>
+        </article>
+        <article class="team-card fade">
+          <img class="team-photo" src="https://placehold.co/600x400" alt="팀원 사진" />
+          <div class="team-role">Design</div>
+          <h3 class="team-name">팀원 이름</h3>
+          <p class="team-intro">전문 분야나 관심사를 간단히 소개해보세요.</p>
+        </article>
+        <article class="team-card fade">
+          <img class="team-photo" src="https://placehold.co/600x400" alt="팀원 사진" />
+          <div class="team-role">Engineering</div>
+          <h3 class="team-name">팀원 이름</h3>
+          <p class="team-intro">현재 집중하고 있는 프로젝트 키워드를 적어주세요.</p>
+        </article>
+      </section>
+
     </div>
   </body>
 </html>

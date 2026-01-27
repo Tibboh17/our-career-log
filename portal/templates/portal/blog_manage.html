@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>블로그 관리 | 우리들의 이직로그</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #0f0f10;
+        --bg-2: #15161a;
+        --ink: #f5f5f5;
+        --muted: rgba(245, 245, 245, 0.62);
+        --accent: #ff6a3d;
+        --accent-2: #ffb347;
+        --card: rgba(255, 255, 255, 0.06);
+        --stroke: rgba(255, 255, 255, 0.1);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        --radius-lg: 28px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at 15% 20%, rgba(255, 106, 61, 0.35), transparent 48%),
+          radial-gradient(circle at 85% 0%, rgba(255, 179, 71, 0.28), transparent 42%),
+          linear-gradient(140deg, var(--bg), var(--bg-2));
+        color: var(--ink);
+        font-family: "Gmarket Sans", "SUIT", "NanumSquare", "Apple SD Gothic Neo",
+          "Malgun Gothic", sans-serif;
+        min-height: 100vh;
+      }
+
+      .shell {
+        width: min(90vw, 1400px);
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 26px;
+      }
+
+      .btn {
+        border-radius: 999px;
+        padding: 10px 16px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--ink);
+        font-size: 13px;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .btn.primary {
+        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        border-color: transparent;
+        color: #fff;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="card">
+        <header>
+          <h1>블로그 관리</h1>
+          <div class="actions">
+            <a class="btn" href="{% url 'portal:blog-list' %}">목록</a>
+            <a class="btn primary" href="{% url 'portal:blog-create' %}">새 글</a>
+          </div>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th>제목</th>
+              <th>공개</th>
+              <th>슬러그</th>
+              <th>작성일</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for post in posts %}
+            <tr>
+              <td>{{ post.title }}</td>
+              <td><span class="badge">{{ post.is_public|yesno:"공개,비공개" }}</span></td>
+              <td>{{ post.slug }}</td>
+              <td>{{ post.created_at|date:"Y.m.d" }}</td>
+              <td>
+                <div class="actions">
+                  <a class="btn" href="{% url 'portal:blog-edit' post.slug %}">수정</a>
+                  <a class="btn" href="{% url 'portal:blog-delete' post.slug %}">삭제</a>
+                </div>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5">등록된 글이 없습니다.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

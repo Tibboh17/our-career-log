@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ project.title }} | 우리들의 이직로그</title>
+    <title>{{ post.title }} | 기술 블로그</title>
     <style>
       :root {
         color-scheme: light;
@@ -66,8 +66,13 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        font-size: 13px;
-        color: var(--muted);
+        font-size: 16px;
+        color: var(--ink);
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: linear-gradient(120deg, rgba(255, 106, 61, 0.18), rgba(255, 179, 71, 0.12));
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
       }
 
       .nav-pill {
@@ -111,6 +116,7 @@
 
       .hero-media {
         width: 100%;
+        max-height: 360px;
         border-radius: 18px;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.12);
@@ -201,64 +207,6 @@
         max-width: 100%;
         border-radius: 16px;
       }
-
-      .markdown-content .embed-card {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 180px;
-        gap: 14px;
-        padding: 12px 14px;
-        border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.06);
-        text-decoration: none;
-        color: var(--ink);
-      }
-
-      .markdown-content .embed-card:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-      }
-
-      .markdown-content .embed-text {
-        display: grid;
-        gap: 6px;
-        align-content: center;
-      }
-
-      .markdown-content .embed-title {
-        font-weight: 600;
-      }
-
-      .markdown-content .embed-desc {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .markdown-content .embed-url {
-        color: var(--muted);
-        font-size: 12px;
-        word-break: break-all;
-      }
-
-      .markdown-content .embed-thumb {
-        width: 100%;
-        height: 100px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        object-fit: cover;
-        background: rgba(255, 255, 255, 0.08);
-      }
-
-      .markdown-content .embed-thumb.placeholder {
-        display: block;
-      }
-
-      @media (max-width: 700px) {
-        nav {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-        }
-      }
     </style>
   </head>
   <body>
@@ -266,19 +214,22 @@
     <div class="shell">
       <nav>
         <div class="brand">Our Career Log</div>
-        <a class="nav-pill" href="{% url 'portal:project-list' %}">← 목록으로</a>
+        <a class="nav-pill" href="{% url 'portal:blog-list' %}">← 목록으로</a>
       </nav>
 
       <article class="hero">
-        <div class="meta">Public · {{ project.created_at|date:"Y.m.d" }}</div>
-        <h1 class="headline">{{ project.title }}</h1>
-        {% if project.thumbnail %}
+        <div class="meta">Public · {{ post.created_at|date:"Y.m.d" }}</div>
+        <h1 class="headline">{{ post.title }}</h1>
+        {% if post.thumbnail %}
         <div class="hero-media">
-          <img src="{{ project.thumbnail.url }}" alt="" loading="lazy" />
+          <img src="{{ post.thumbnail.url }}" alt="" loading="lazy" />
         </div>
         {% endif %}
-        {% if rendered_description %}
-        <div class="rich-content">{{ rendered_description|safe }}</div>
+        {% if post.summary %}
+        <p class="desc">{{ post.summary }}</p>
+        {% endif %}
+        {% if rendered_content %}
+        <div class="rich-content">{{ rendered_content|safe }}</div>
         {% endif %}
       </article>
     </div>

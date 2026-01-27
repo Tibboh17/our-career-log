@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>프로젝트 삭제 | 우리들의 이직로그</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #ffffff;
+        --bg-2: #f6f6f4;
+        --ink: #1b1b1f;
+        --muted: rgba(27, 27, 31, 0.62);
+        --accent: #ff6a3d;
+        --accent-2: #ffb347;
+        --card: #ffffff;
+        --stroke: rgba(27, 27, 31, 0.12);
+        --shadow: 0 24px 60px rgba(27, 27, 31, 0.08);
+        --radius-lg: 28px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, var(--bg), var(--bg-2));
+        color: var(--ink);
+        font-family: "Gmarket Sans", "SUIT", "NanumSquare", "Apple SD Gothic Neo",
+          "Malgun Gothic", sans-serif;
+        min-height: 100vh;
+      }
+
+      .shell {
+        width: min(70vw, 900px);
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+      }
+
+      p {
+        margin: 0 0 24px;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border-radius: 999px;
+        padding: 10px 16px;
+        border: 1px solid var(--stroke);
+        background: rgba(27, 27, 31, 0.06);
+        color: var(--ink);
+        font-size: 13px;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .btn.danger {
+        background: #ff5c5c;
+        border-color: transparent;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="card">
+        <h1>프로젝트 삭제</h1>
+        <p>"{{ project.title }}" 프로젝트를 삭제할까요? 이 작업은 되돌릴 수 없습니다.</p>
+        <form method="post">
+          {% csrf_token %}
+          <div class="actions">
+            <button class="btn danger" type="submit">삭제</button>
+            <a class="btn" href="{% url 'portal:project-manage' %}">취소</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
