@@ -75,7 +75,7 @@ def project_list(request):
     context = {
         "projects": projects,
     }
-    return render(request, "portal/projects.html", context)
+    return render(request, "portal/project_list.html", context)
 
 
 def project_detail(request, slug):

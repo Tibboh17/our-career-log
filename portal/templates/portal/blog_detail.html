@@ -7,15 +7,15 @@
     <style>
       :root {
         color-scheme: light;
-        --bg: #0f0f10;
-        --bg-2: #15161a;
-        --ink: #f5f5f5;
-        --muted: rgba(245, 245, 245, 0.62);
+        --bg: #ffffff;
+        --bg-2: #ffffff;
+        --ink: #111111;
+        --muted: rgba(17, 17, 17, 0.6);
         --accent: #ff6a3d;
         --accent-2: #ffb347;
-        --card: rgba(255, 255, 255, 0.06);
-        --stroke: rgba(255, 255, 255, 0.1);
-        --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        --card: #ffffff;
+        --stroke: rgba(0, 0, 0, 0.2);
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
         --radius-lg: 28px;
         --radius-md: 18px;
         --radius-sm: 12px;
@@ -27,24 +27,16 @@
 
       body {
         margin: 0;
-        background: radial-gradient(circle at 15% 20%, rgba(255, 106, 61, 0.35), transparent 48%),
-          radial-gradient(circle at 85% 0%, rgba(255, 179, 71, 0.28), transparent 42%),
-          linear-gradient(140deg, var(--bg), var(--bg-2));
+        background: #ffffff;
         color: var(--ink);
-        font-family: "Gmarket Sans", "SUIT", "NanumSquare", "Apple SD Gothic Neo",
-          "Malgun Gothic", sans-serif;
+        font-family: "SF Pro Display", "SF Pro Text", "Apple SD Gothic Neo",
+          "Noto Sans KR", "Malgun Gothic", sans-serif;
+        font-weight: 600;
         min-height: 100vh;
       }
 
       .grain {
-        position: fixed;
-        inset: 0;
-        background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02) 76%, transparent 77%, transparent),
-          linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02) 76%, transparent 77%, transparent);
-        background-size: 120px 120px;
-        pointer-events: none;
-        opacity: 0.25;
-        mix-blend-mode: overlay;
+        display: none;
       }
 
       .shell {
@@ -60,19 +52,6 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 48px;
-      }
-
-      .brand {
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        font-size: 16px;
-        color: var(--ink);
-        padding: 8px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--stroke);
-        background: linear-gradient(120deg, rgba(255, 106, 61, 0.18), rgba(255, 179, 71, 0.12));
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
       }
 
       .nav-pill {
@@ -213,7 +192,6 @@
     <div class="grain"></div>
     <div class="shell">
       <nav>
-        <div class="brand">Our Career Log</div>
         <a class="nav-pill" href="{% url 'portal:blog-list' %}">← 목록으로</a>
       </nav>
 
